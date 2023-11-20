@@ -9,3 +9,6 @@ This repository contains an example implementation of contract testing using PAC
 To use this project, follow these steps:
 
 1. Clone the repository:
+   ```
+   https://github.com/ISanjeevKumar/contract-test-pact.git
+   ```
