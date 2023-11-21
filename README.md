@@ -29,4 +29,17 @@ To run consumer-driven contract tests with Pact:
 1. **Start by Cloning the Repository**
 
    ```bash
-   git clone <https://github.com/ISanjeevKumar/contract-test-pact.git>
+   git clone https://github.com/ISanjeevKumar/contract-test-pact.git
+   ```
+
+2. **Building Services
+
+Build the Payment and Order services using Gradle.
+   
+```bash
+cd payment-service
+./gradlew build
+cd ../order-service
+./gradlew build
+
+```
