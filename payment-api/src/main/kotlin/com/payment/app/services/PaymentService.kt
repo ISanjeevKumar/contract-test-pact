@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service
 @Service
 class PaymentService {
     fun processPayment(paymentRequest: PaymentRequestModel): PaymentResponseModel {
-        // Perform payment processing logic here (mocked response for demonstration)
         val transactionId = "txn123"
         val status = "success"
 
