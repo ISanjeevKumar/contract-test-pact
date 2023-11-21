@@ -8,8 +8,8 @@ plugins {
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
 }
 
-group = "org.example"
-version = "1.0-SNAPSHOT"
+group = "org.payment.api"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -38,4 +38,12 @@ tasks.withType<KotlinCompile> {
         freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = "11"
     }
+}
+
+pact {
+    publish {
+        pactDirectory = "build/pacts"
+        pactBrokerUrl = "http://localhost:9292/"
+    }
+
 }

@@ -22,7 +22,7 @@ class DummyBankContractTests {
         val expectedResponse = PactDslJsonBody()
             .stringType("accountName", "Dummy Bank")
             .integerType("sortCode", 123456)
-            .integerType("sortCode", 12345678)
+            .integerType("accountNumber", 12345678)
             .asBody()
 
         return builder.given("get bank info details")
@@ -38,7 +38,7 @@ class DummyBankContractTests {
 
     @PactTestFor(pactMethod = "getBankInfo")
     @Test
-    fun `should create journey for on boarded product`(mockServer: MockServer) {
+    fun `should get bank info`(mockServer: MockServer) {
         val response = Request.Get(mockServer.getUrl() + "/bank/details")
             .setHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
             .execute().returnResponse()
