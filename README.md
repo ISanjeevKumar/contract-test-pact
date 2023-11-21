@@ -5,7 +5,7 @@ This repository contains an example implementation of contract testing using PAC
 
 This repository demonstrates how to use Pact for consumer-driven contract testing between Payment and Order services.
 
-# Payment and Order Service with Pact Consumer-Driven Contract Testing
+## Use Case: Payment and Order Service with Pact Consumer-Driven Contract Testing
 
 This repository demonstrates how to use Pact for consumer-driven contract testing between Payment and Order services.
 
