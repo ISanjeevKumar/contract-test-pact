@@ -18,11 +18,15 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions:1.1.6")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.3.5")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.kafka:spring-kafka-test:2.8.3")
+    testImplementation("io.projectreactor:reactor-test")
     //pact
     testImplementation("au.com.dius:pact-jvm-consumer-junit5:4.0.10")
     testImplementation("au.com.dius:pact-jvm-provider-junit5:4.0.10")
+
 }
 
 tasks.test {
