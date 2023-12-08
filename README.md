@@ -20,14 +20,14 @@ This repository demonstrates how to use Pact for consumer-driven contract testin
 
 The Payment Service is a simple Spring Boot application developed in Kotlin that simulates a payment processing system. It includes REST API endpoints to handle payment requests and responses between a consumer (client) and the payment service provider.
 
-###### Use Case
+#### Use Case
 
 The Payment Service acts as a provider in a payment processing scenario:
 
 - **Consumer (Client Perspective):** The consumer, sends payment details to the Payment Service for processing a transaction.
 - **Provider (Payment Service Perspective):** The Payment Service receives payment requests from consumers, processes them, and returns a response indicating the status of the payment transaction.
 
-######  Setup Payment Service on local machine
+####  Setup Payment Service on local machine
 
 1. Clone this repository:
 ```bash
@@ -45,7 +45,7 @@ cd  ./gradlew build
 ```bash
 cd  ./gradlew bootRun
 ````
-###### Payment API Endpoints
+#### Payment API Endpoints
 * POST /process-payment: Endpoint for processing payment requests. Send a JSON payload with payment details to simulate a payment transaction.
 
 Request Body:
