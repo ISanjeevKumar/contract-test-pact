@@ -1,4 +1,4 @@
-## Pact: Consumer-Driven Contract Testing Using Kotlin
+## Pact: Consumer-Driven Contract Testing in Kotlin
 
 ### Overview
 
