@@ -63,7 +63,7 @@ Request Body:
 Response for a Successful Payment:
 ```json
 {
-   "transaction_id": "1234567890",
+   "transactionId": "1234567890",
    "status": "success",
    "message": "Payment successful."
 }
@@ -71,7 +71,7 @@ Response for a Successful Payment:
 Response for a Failed Payment:
 ```json
 {
-  "transaction_id": "1234567890",
+  "transactionId": "1234567890",
   "status": "failed",
   "message": "Payment declined."
 }
