@@ -11,39 +11,37 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import org.apache.http.client.fluent.Request
 import org.apache.http.entity.ContentType
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.fail
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
-import java.io.IOException
 
 @ExtendWith(PactConsumerTestExt::class)
 @PactTestFor(hostInterface = "localhost", port = "9292")
-class OrderServiceConsumerTest {
+class OrderServicePaymentConsumerTest {
 
-    @Pact(consumer = "Order-Service-Consumer", provider = "Payment-Provider")
-    fun createOrder(builder: PactDslWithProvider): RequestResponsePact {
+    @Pact(consumer = "create-order-xxxx", provider = "transaction-xxxx")
+    fun createPaymentPact(builder: PactDslWithProvider): RequestResponsePact {
         val expectedRequest = PactDslJsonBody()
-            .integerType("orderId", 123)
-            .decimalType("totalAmount", 50.0)
-            .`object`("customer")
-            .stringType("id", "customer123")
-            .stringType("name", "John Doe")
-            .stringType("email", "john@example.com")
-            .closeObject()
+            .stringType("transactionId", "1234567890")
+            .decimalType("amount", 50.0)
+            .stringType("currency", "INR")
+            .stringType("paymentMethod", "credit_card")
+            .stringType("cardNumber", "1234 5678 9101 1121")
+            .stringType("expiryDate", "12/25")
+            .stringType("cvv", "123")
             .asBody()
         val expectedResponse = PactDslJsonBody()
-            .stringType("transactionId", "txn123")
+            .stringType("transactionId", "1234567890")
             .stringType("status", "success")
+            .stringType("message", "Payment successful.")
             .asBody()
 
         return builder
             .given("Payment request is valid")
             .uponReceiving("A request to process payment for the order")
-            .path("/payments")
+            .path("/process-payment")
             .method("POST")
             .headers(mapOf(HttpHeaders.CONTENT_TYPE to MediaType.APPLICATION_JSON_VALUE))
             .body(expectedRequest)
@@ -55,21 +53,21 @@ class OrderServiceConsumerTest {
 
     }
 
-    @PactTestFor(pactMethod = "createOrder")
+    @PactTestFor(pactMethod = "createPaymentPact")
     @Test
-    fun `Should be able to complete payment for an order`(mockServer: MockServer) {
-        val request = mapOf(
-            "orderId" to 123,
-            "totalAmount" to 50.0,
-            "customer" to mapOf(
-                "id" to "customer123",
-                "name" to "John Doe",
-                "email" to "john@example.com"
-            )
+    fun `should complete payment for an order`(mockServer: MockServer) {
+        val requestPayload = mapOf(
+            "transactionId" to "1234567890",
+            "amount" to 50.0,
+            "currency" to "INR",
+            "paymentMethod" to "credit_card",
+            "cardNumber" to "1234 5678 9101 1121",
+            "expiryDate" to "12/25",
+            "cvv" to "123"
         )
-        val requestBody = ObjectMapperCache.objectMapper.writeValueAsString(request)
+        val requestBody = ObjectMapperCache.objectMapper.writeValueAsString(requestPayload)
 
-        val response = Request.Post(mockServer.getUrl()+"/payments")
+        val response = Request.Post(mockServer.getUrl() + "/process-payment")
             .bodyString(requestBody, ContentType.APPLICATION_JSON)
             .execute()
             .returnResponse()

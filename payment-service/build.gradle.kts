@@ -17,6 +17,11 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
+    }
+    testImplementation("io.mockk:mockk:1.10.0")
+    testImplementation("com.ninja-squad:springmockk:2.0.3")
     //pact
     testImplementation("au.com.dius:pact-jvm-consumer-junit5:4.0.10")
     testImplementation("au.com.dius:pact-jvm-provider-junit5:4.0.10")

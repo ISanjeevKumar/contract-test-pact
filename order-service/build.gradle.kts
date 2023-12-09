@@ -8,7 +8,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
 }
 
-group = "org.order.api"
+group = "order.service"
 version = "1.0.1"
 
 repositories {
