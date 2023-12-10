@@ -76,3 +76,30 @@ Response for a Failed Payment:
   "message": "Payment declined."
 }
 ```
+### Pact Tests
+The repository includes Pact sample tests:
+* `OrderServicePaymentConsumerTest` for the Order Service (Consumer)
+* `PaymentServiceProviderTest` for the Payment Service (Provider)
+
+#### About Consumer Pact Test
+* The `OrderServicePaymentConsumerTest` contains Pact tests for the Order Service, validating its interactions with the Payment Service. These tests define expected requests and responses, ensuring contract compliance.
+
+#### About Provider Pact Test
+The `PaymentServiceProviderTest` contains Pact tests for the Payment Service, validating its compliance with contracts specified by the Order Service. These tests confirm that the Payment Service behaves as expected.
+
+### How to Run Pact Test in Local Machine
+1. Consumer Test Execution
+* Ensure the Pact Broker is running. user the below docker command:
+ ```bash
+docker-compose -f localpath-to-repo/pact-broker-docker-compose.yml up
+```
+* Run the `OrderServicePaymentConsumerTest` and generate a pact file.
+* Publish the pact aka contract to PACT broker using below command
+```bash
+ ./gradlew pactPublish
+```
+
+2. Provider Test Execution
+* Ensure the Pact Broker is running and contract is published.
+* Run the `PaymentServiceProviderTest` to validate the Payment Service contracts set by the Order Service.
+
