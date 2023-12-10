@@ -89,7 +89,7 @@ The `PaymentServiceProviderTest` contains Pact tests for the Payment Service, va
 
 ### How to Run Pact Test in Local Machine
 1. Consumer Test Execution
-* Ensure the Pact Broker is running. user the below docker command:
+* Ensure the Pact Broker is running. use the below docker command:
  ```bash
 docker-compose -f localpath-to-repo/pact-broker-docker-compose.yml up
 ```
