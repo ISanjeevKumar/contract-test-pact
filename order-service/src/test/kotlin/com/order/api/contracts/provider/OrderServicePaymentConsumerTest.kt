@@ -21,7 +21,7 @@ import org.springframework.http.MediaType
 @PactTestFor(hostInterface = "localhost", port = "9292")
 class OrderServicePaymentConsumerTest {
 
-    @Pact(consumer = "create-order-xxxx", provider = "transaction-xxxx")
+    @Pact(consumer = "user-order-consumer", provider = "cart-payment-provider")
     fun createPaymentPact(builder: PactDslWithProvider): RequestResponsePact {
         val expectedRequest = PactDslJsonBody()
             .stringType("transactionId", "1234567890")
@@ -39,7 +39,7 @@ class OrderServicePaymentConsumerTest {
             .asBody()
 
         return builder
-            .given("Payment request is valid")
+            .given("payment request is valid")
             .uponReceiving("A request to process payment for the order")
             .path("/process-payment")
             .method("POST")

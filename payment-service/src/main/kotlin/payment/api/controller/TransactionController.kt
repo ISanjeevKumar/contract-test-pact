@@ -11,10 +11,7 @@ import payment.api.datamodel.PaymentResponseModel
 import payment.api.services.TransactionService
 
 @RestController
-class TransactionController {
-    @Autowired
-    private lateinit var transactionService: TransactionService;
-
+class TransactionController(private val transactionService: TransactionService) {
     @PostMapping("/process-payment")
     fun makePayment(@RequestBody paymentRequest: PaymentRequestModel): ResponseEntity<PaymentResponseModel> {
         val paymentResponse = transactionService.processPayment(paymentRequest)

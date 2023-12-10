@@ -11,20 +11,32 @@ import io.mockk.every
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestTemplate
 import org.junit.jupiter.api.extension.ExtendWith
-import payment.api.datamodel.PaymentRequestModel
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.web.server.LocalServerPort
+import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.junit.jupiter.SpringExtension
+import payment.api.PaymentApp
 import payment.api.datamodel.PaymentResponseModel
 import payment.api.services.TransactionService
 
 @PactBroker(host = "localhost", port = "9292")
-@Provider("transaction-xxxx")
+@Provider("cart-payment-provider")
+@SpringBootTest(classes = [PaymentApp::class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ExtendWith(SpringExtension::class)
+@AutoConfigureWebTestClient
+@ActiveProfiles("test")
 class PaymentServiceProviderTest {
 
+    @LocalServerPort
+    lateinit var port: Integer
+
     @MockkBean
-    private lateinit var transactionService: TransactionService
+    lateinit var transactionService: TransactionService
 
     @BeforeEach
     fun setupTestTarget(context: PactVerificationContext) {
-        context.target = HttpTestTarget("localhost", 8080)
+        context.target = HttpTestTarget("localhost", port.toInt(), "/")
     }
 
     @TestTemplate
@@ -33,12 +45,13 @@ class PaymentServiceProviderTest {
         context?.verifyInteraction()
     }
 
-    @State("Payment request is valid")
-    fun validPaymentRequestState() {
-        val request = PaymentRequestModel(
-            "1234567890", 10.00, "INR", "credit_card", "1234 5678 9101 1121",
-            "12/25", "123"
+    @State("payment request is valid")
+    fun `process the payment`() {
+        val response = PaymentResponseModel(
+            "1234567890",
+            "success",
+            "Payment successful."
         )
-        every { transactionService.processPayment(request) } returns PaymentResponseModel("1234567890", "success","Payment successful.")
+        every { transactionService.processPayment(any()) } returns response
     }
 }

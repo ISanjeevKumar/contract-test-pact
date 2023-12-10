@@ -25,7 +25,6 @@ dependencies {
     //pact
     testImplementation("au.com.dius:pact-jvm-consumer-junit5:4.0.10")
     testImplementation("au.com.dius:pact-jvm-provider-junit5:4.0.10")
-
 }
 
 tasks.test {
